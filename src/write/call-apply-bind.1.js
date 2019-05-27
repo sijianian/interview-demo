@@ -1,4 +1,8 @@
-function myCall(context) {
+/* eslint-disable no-extend-native */
+
+// 参数
+// this 指向
+Function.prototype.myCall = function(context) {
   if (typeof this !== 'function') {
     throw new TypeError()
   }
@@ -15,7 +19,7 @@ function myCall(context) {
   return result
 }
 
-function myApply(context) {
+Function.prototype.myApply = function(context) {
   if (typeof this !== 'function') {
     throw new TypeError()
   }
@@ -23,25 +27,21 @@ function myApply(context) {
   context = context || window
   context.fn = this
 
-  let result
-
-  if (arguments[1]) {
-    result = context.fn(...arguments[1])
-  } else {
-    result = context.fn()
-  }
-
+  const args = arguments[1] ? [...arguments[1]] : []
+  let result = context.fn(args)
   delete context.fn
 
   return result
 }
 
-function myBind(context) {
+// 返回函数
+Function.prototype.myBind = function(context) {
   if (typeof this !== 'function') {
     throw new TypeError()
   }
 
   context = context || window
+
   const _this = this
   const args = [...arguments].slice(1)
 
@@ -54,24 +54,23 @@ function myBind(context) {
   }
 }
 
-function create() {
+// new
+function myNew() {
   let obj = {}
-
-  const con = [].shift.call(arguments)
-
-  obj.__proto__ = con.prototype
-
-  let result = con.apply(obj, arguments)
+  let fn = [].shift.call(arguments)
+  obj.__proto__ = fn.prototype
+  let result = fn.apply(obj, arguments)
 
   return result instanceof Object ? result : obj
 }
 
+// 对象，函数
 function myInstanceOf(left, right) {
-  const tempPrototype = right.prototype
+  let tempPrototype = right.prototype
 
   left = left.__proto__
 
-  while (true) {
+  while(true) {
     if (left === null) {
       return false
     }
@@ -83,3 +82,21 @@ function myInstanceOf(left, right) {
     left = left.__proto__
   }
 }
+
+// 组合寄生继承
+function Parent(val) {
+  this.val = val
+}
+
+Parent.prototype.getVal = function() {
+  console.log(this.val)
+}
+
+function Child(val) {
+  Parent.call(this, val)
+}
+
+// 新创建对象的原型对象
+// 枚举属性
+Child.prototype = Object.create(Parent.prototype)
+Child.prototype.constructor = Child
