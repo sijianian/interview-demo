@@ -1,6 +1,3 @@
-import { findNodeModule } from "jest-resolve";
-import { on } from "cluster";
-
 const PENDING = 'pending'
 const RESOLVE = 'resolve'
 const REJECT = 'reject'
@@ -11,8 +8,6 @@ class MyPromise {
     this.value = null
     this.resolveCallbacks = []
     this.rejectCallbacks = []
-
-
   }
 
   resolve(val) {
@@ -33,12 +28,6 @@ class MyPromise {
 }
 
 function fn() {}
-
-// try {
-//   fn(resolve, reject)
-// } catch (e) {
-
-// }
 
 MyPromise.prototype.then = function(onFufilled, onRejected) {
   const that = this
