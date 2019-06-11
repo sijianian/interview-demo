@@ -1,130 +1,77 @@
-/* eslint-disable no-extend-native */
+const PENDING = 'pending'
+const RESOLVED = 'resolved'
+const REJECTED = 'rejected'
 
-function Parent(val) {
-  this.val = val
-}
+function MyPromise(fn) {
+  const that = this
 
-Parent.prototype.getVal = function() {
-  console.log(this.val)
-}
+  that.state = PENDING // 默认
+  that.value = null
 
-function Child(val) {
-  Parent.call(this, val)
-}
+  that.resolvedCallBacks = []
+  that.rejectedCallbacks = []
 
-Child.prototype = Object.create(Parent.prototype, {
-  constructor: {
-    value: Child,
-  },
-})
-
-function swap() {}
-
-function bubble(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    for (let j = 0; j < i; j++) {
-      if (array[j] > array[j + 1]) {
-        swap(array, j, j + 1)
+  function resolve(value) {
+    setTimeout(() => {
+      if ((that.state = RESOLVED)) {
+        that.state = RESOLVED
+        that.value = value
+        that.resolvedCallBacks.map(cb => cb(that.value))
       }
-    }
+    })
   }
 
-  return array
-}
+  function reject(value) {
+    // TODO: 保证顺序
+    setTimeout(() => {
+      if ((that.state = REJECTED)) {
+        that.state = REJECTED
+        that.value = value
+        that.rejectedCallbacks.map(cb => cb(that.value))
+      }
+    })
+  }
 
-function myCall(context) {
-  context = context || window
-
-  const args = [...arguments].slice(1)
-
-  context.fn = this
-
-  const result = context.fn(...args)
-
-  delete context.fn
-  return result
-}
-
-function myApply(context) {
-  context = context || window
-
-  const args = arguments[1] ? [...arguments[1]] : []
-
-  context.fn = this
-
-  const result = context.fn(...args)
-
-  delete context.fn
-  return result
-}
-
-Function.prototype.myBind = function(context) {
-  context = context || window
-
-  const args = [...arguments].slice(1)
-  const _this = this
-
-  return function F() {
-    if (this instanceof F) {
-      return new _this(...args, ...arguments)
-    }
-
-    return _this.apply(context, args.concat(...arguments))
+  try {
+    fn(resolve, reject)
+  } catch (e) {
+    reject(e)
   }
 }
 
-// 新对象
-// 原型链
-// this
-// 返回
+MyPromise.prototype.then = function(onFulfileld, onRejected) {
+  const that = this
 
-function myNew() {
-  // 获取构造函数
-  const fn = [].shift.call(arguments)
+  onFulfileld = typeof onFulfileld === 'function' ? onFulfileld : () => {}
+  onRejected =
+    typeof onRejected === 'function'
+      ? onRejected
+      : e => {
+          throw e
+        }
 
-  let obj = {}
-
-  obj.__proto__ = fn.prototype
-
-  // 确保 this
-  let result = fn.apply(obj, arguments)
-
-  return result instanceof Object ? result : obj
-}
-
-function myInstanceOf(left, right) {
-  left = left.__proto__
-
-  while (true) {
-    if (left === null) {
-      return false
-    }
-
-    if (left === right.prototype) {
-      return
-    }
-
-    left = left.__proto__
+  if (this.state === PENDING) {
+    that.resolvedCallBacks.push(onFulfileld)
+    that.rejectedCallbacks.push(onRejected)
   }
-}
 
-// 插入排序
-function insertSort(array) {
-  for (let i = 1; i < array.length; i++) {
-    for (let j = i - 1; j >= 0 && array[j] > array[j++]; j--) {
-      swap(array, j, j + 1)
-    }
+  if (that.state === RESOLVED) {
+    onFulfileld(that.value)
   }
-}
 
-function selecSort(array) {
-  for (let i = 0; i < array.length - 1; i++) {
-    let minIndex = i
-
-    for (let j = i + 1; i < array.length; j++) {
-      minIndex = array[j] < array[minIndex] ? j : minIndex
-    }
-
-    swap(array, i, minIndex)
+  if (that.state === REJECTED) {
+    onRejected(that.value)
   }
+
+  // TODO: 返回 promise
+
+  return new Promise()
 }
+
+new MyPromise(resolve => {
+  setTimeout(() => {
+    resolve(1)
+  }, 0)
+}).then(value => {
+  console.log(value)
+})
