@@ -3,22 +3,27 @@ function Fibonacci(n) {
   let g = 1
 
   while (n--) {
-    g += f
+    g = g + f
     f = g - f
   }
 
   return f
 }
 
-function Fibonacci2(n) {
-  let first = 0
-  let second = 1
-  let result
+function fibonacci2(n) {
+  return n < 2 ? n : fibonacci2(n - 2) + fibonacci2(n - 1)
+}
+
+function fibonacci3(n) {
+  let f1 = 1
+  let f2 = 0
+  let r
 
   while (n--) {
-    result = first + second
-
+    r = f1 + f2
+    f2 = f1
+    f1 = r
   }
 
-  return result
+  return r
 }
