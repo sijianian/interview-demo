@@ -15,8 +15,8 @@ function fibonacci2(n) {
 }
 
 function fibonacci3(n) {
-  let f1 = 1
-  let f2 = 0
+  let f1 = 0
+  let f2 = 1
   let r
 
   while (n--) {
