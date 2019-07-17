@@ -1,3 +1,10 @@
+/**
+ * 讲解: https://juejin.im/post/5c199c0ae51d452f6028a072
+ * 幕布: https://mubu.com/doc/2Be2P9oKmM
+ *
+ * @export
+ * @class EventEmitter
+ */
 export default class EventEmitter {
   constructor() {
     this._events = Object.create(null)
