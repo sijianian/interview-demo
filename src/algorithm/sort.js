@@ -1,5 +1,3 @@
-import { list } from 'postcss'
-
 function checkArray(Array) {
   return Array.isArray()
 }
@@ -59,7 +57,7 @@ function selection(array) {
     swap(array, i, minIndex)
   }
 
-  return
+  return array
 }
 
 // 快速排序
