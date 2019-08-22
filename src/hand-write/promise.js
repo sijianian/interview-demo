@@ -44,10 +44,12 @@ class MyPromise {
   }
   static deferred() {
     let dfd = {}
-    dfd.promies = new MyPromise((resolve, reject) => {
+
+    dfd.promise = new MyPromise((resolve, reject) => {
       dfd.resolve = resolve
-      dfd.rfeject = reject
+      dfd.reject = reject
     })
+
     return dfd
   }
 
