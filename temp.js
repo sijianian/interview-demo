@@ -1,59 +1,76 @@
-function checkArray(Array) {
-  return Array.isArray()
+/* eslint-disable no-extend-native */
+Function.prototype.call = function(context) {
+  context = context || window
+
+  const mySymbol = Symbol()
+  const args = [...arguments].slice(1)
+
+  context[mySymbol] = this
+
+  const result = context[mySymbol](...args)
+
+  delete context[mySymbol]
+
+  return result
 }
 
-function swap(array, left, right) {
-  let rightValue = array[right]
+Function.prototype.apply = function(context) {
+  context = context || window
 
-  array[right] = array[left]
-  array[left] = rightValue
-}
+  const mySymbol = new Symbol()
+  const args = [...arguments].slice(1)
 
-// 冒泡排序
-function bubble(array) {
-  if (!checkArray(array)) {
-    return
+  context[mySymbol] = this
+
+  let result
+
+  if (args[0]) {
+    result = context[mySymbol](args)
+  } else {
+    result = context[mySymbol]()
   }
 
-  for (let i = array.length - 1; i > 0; i--) {
-    for (let j = 0; j < i; i++) {
-      if (array[j] > array[j + 1]) {
-        swap(array, array[j + 1], array[j + 1])
-      }
+  delete context[mySymbol]()
+
+  return result
+}
+
+Function.prototype.bind = function(context) {
+  const _this = this
+  const args = [...arguments].slice(1)
+
+  return function F() {
+    if (this instanceof F) {
+      return new _this(...args, ...arguments)
     }
+    return _this.apply(context, args.context(...arguments))
   }
-
-  return array
 }
 
-// 插入排序
-function insertion(array) {
-  if (!checkArray(array)) {
-    return
-  }
+function myNew() {
+  let obj = {}
+  let Con = [].shift.call(arguments)
 
-  for (let i = 1; i < array.length - 1; i++) {
-    for (let j = i - 1; j >= 0 && array[j] > array[j + 1]; j--) {
-      swap(array, array[j], array[j + 1])
-    }
-  }
+  obj.__proto__ = Con.prototype
 
-  return array
+  let result = Con.apply(obj, arguments)
+  return result instanceof Object ? result : obj
 }
 
-// 选择排序
-function selection(array) {
-  if (!checkArray(array)) {
-    return
-  }
+function myInstanceof(left, right) {
+  let prototype = right.prototype
 
-  for (let i = 0; i < array.length - 1; i++) {
-    let minIndex = i
-    for (let j = i + 1; j < array.length - 1; j++) {
-      minIndex = array[j] < array[minIndex] ? j : minIndex
+  left = left.__proto__
+
+  while(true) {
+    if (!left === null || !left === undefined) {
+      return
     }
-    swap(array, i, minIndex)
-  }
 
-  return array
+    if (prototype === left) {
+      return true
+    }
+
+    left = left.__proto__
+  }
 }

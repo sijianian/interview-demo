@@ -1,52 +1,148 @@
 const PENDING = 'pending'
-const RESOLVE = 'resolve'
-const REJECT = 'reject'
+const FULFILLED = 'fulfilled'
+const REJECTED = 'rejected'
 
 class MyPromise {
-  constructor() {
-    this.status = PENDING
+  static resolve(value) {
+    return new Promise((resolve, reject) => {
+      resolve(value)
+    })
+  }
+  static reject(value) {
+    return new MyPromise((resolve, reject) => {
+      reject(value)
+    })
+  }
+  static all(promiseArr) {
+    return new MyPromise((resolve, reject) => {
+      let result = []
+
+      promiseArr.forEach((promise, index) => {
+        promise.then(value => {
+          result[index] = value
+
+          if (result.length === promiseArr.length) {
+            resolve(result)
+          }
+        }, reject)
+      })
+    })
+  }
+  static race(promiseArr) {
+    return new MyPromise((resolve, reject) => {
+      promiseArr.forEach(promise => {
+        promise.then(
+          value => {
+            resolve(value)
+          },
+          err => reject(err)
+        )
+      })
+    })
+  }
+  static deferred() {
+    let dfd = {}
+    dfd.promies = new MyPromise((resolve, reject) => {
+      dfd.resolve = resolve
+      dfd.rfeject = reject
+    })
+    return dfd
+  }
+
+  constructor(fn) {
+    this.state = PENDING
     this.value = null
-    this.resolveCallbacks = []
-    this.rejectCallbacks = []
-  }
 
-  resolve(val) {
-    if (this.status === PENDING) {
-      this.status = RESOLVE
-      this.value = val
-      this.rejectCallbacks.forEach(cb => cb(this.value))
+    this.onFulfilledCallbacks = []
+    this.onRejectedCallbacks = []
+
+    const resolve = value => {
+      if (value instanceof MyPromise) {
+        return value.then(resolve, reject)
+      }
+
+      setTimeout(() => {
+        if (this.state === PENDING) {
+          this.value = value
+          this.state = FULFILLED
+          this.onFulfilledCallbacks.forEach(fn => fn())
+        }
+      })
+    }
+
+    const reject = value => {
+      setTimeout(() => {
+        if (this.state === PENDING) {
+          this.value = value
+          this.state = REJECTED
+          this.onRejectedCallbacks.forEach(fn => fn())
+        }
+      })
+    }
+
+    try {
+      fn(resolve, reject)
+    } catch (error) {
+      reject(error)
     }
   }
 
-  reject(val) {
-    if (this.status === PENDING) {
-      this.status = REJECT
-      this.value = val
-      this.rejectCallbacks.forEach(cb => cb(this.value))
-    }
+  then(onFulfilled, onRejected) {
+    const that = this
+
+    onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : () => {}
+    onRejected =
+      typeof onRejected === 'function'
+        ? onRejected
+        : r => {
+            throw r
+          }
+
+    const promise2 = new MyPromise((resolve, reject) => {
+      if (that.state === PENDING) {
+        that.onFulfilledCallbacks.push(() => {
+          try {
+            const x = onFulfilled(that.value)
+            that.resolvePromise(promise2, x, resolve, reject)
+          } catch (r) {
+            reject(r)
+          }
+        })
+        that.onRejectedCallbacks.push(() => {
+          try {
+            const x = onRejected(that.value)
+            that.resolvePromise(promise2, x, resolve, reject)
+          } catch (r) {
+            reject(r)
+          }
+        })
+      }
+
+      if (that.state === FULFILLED) {
+        setTimeout(() => {
+          try {
+            const x = onFulfilled(that.value)
+            that.resolvePromise(promise2, x, resolve, reject)
+          } catch (r) {
+            reject(r)
+          }
+        })
+      }
+
+      if (that.state === REJECTED) {
+        setTimeout(() => {
+          try {
+            const x = onRejected(that.value)
+            that.resolvePromise(promise2, x, resolve, reject)
+          } catch (r) {
+            reject(r)
+          }
+        })
+      }
+    })
+
+    return promise2
   }
-}
 
-function fn() {}
-
-MyPromise.prototype.then = function(onFufilled, onRejected) {
-  const that = this
-
-  onFufilled = typeof onFufilled === 'function' ? onFufilled : v => v
-  onRejected = typeof onRejected === 'function' ? onRejected : r => {
-    throw r
-  }
-
-  if (that.state === PENDING) {
-    that.resolveCallbacks.push(onFufilled)
-    that.rejectCallbacks.push(onRejected)
-  }
-
-  if (that.state === RESOLVE) {
-    onFufilled(that.value)
-  }
-
-  if (that.state === REJECT) {
-    onRejected(this.value)
-  }
+  resolvePromise(promise2, x, resolve, reject) {}
 }
