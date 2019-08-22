@@ -90,7 +90,7 @@ class MyPromise {
   then(onFulfilled, onRejected) {
     const that = this
 
-    onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : () => {}
+    onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v
     onRejected =
       typeof onRejected === 'function'
         ? onRejected

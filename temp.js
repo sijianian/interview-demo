@@ -1,76 +1,47 @@
-/* eslint-disable no-extend-native */
-Function.prototype.call = function(context) {
-  context = context || window
+const PENDING = 'pending'
+const FULFILLED = 'fulfilled'
+const REJECTED = 'rejected'
 
-  const mySymbol = Symbol()
-  const args = [...arguments].slice(1)
+class MyPromise {
+  constructor(fn) {
+    this.state = PENDING
+    this.value = null
 
-  context[mySymbol] = this
+    this.fulfilledCallbacks = []
+    this.rejectedCallbacks = []
 
-  const result = context[mySymbol](...args)
+    const resolve = val => {
+      if (this.state === PENDING) {
+        this.state = FULFILLED
+        this.value = val
+        this.fulfilledCallbacks.forEach(fn => fn())
+      }
+    }
+    const reject = val => {
+      if (this.state === PENDING) {
+        this.state = REJECTED
+        this.value = val
+        this.fulfilledCallbacks.forEach(fn => fn())
+      }
+    }
 
-  delete context[mySymbol]
-
-  return result
-}
-
-Function.prototype.apply = function(context) {
-  context = context || window
-
-  const mySymbol = new Symbol()
-  const args = [...arguments].slice(1)
-
-  context[mySymbol] = this
-
-  let result
-
-  if (args[0]) {
-    result = context[mySymbol](args)
-  } else {
-    result = context[mySymbol]()
+    try {
+      fn(resolve, reject)
+    } catch (r) {
+      reject(r)
+    }
   }
 
-  delete context[mySymbol]()
+  then(onFulfilled, onRejected) {
+    onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : () => {}
+    onRejected =
+      typeof onRejected === 'function'
+        ? onRejected
+        : r => {
+            throw r
+          }
 
-  return result
-}
-
-Function.prototype.bind = function(context) {
-  const _this = this
-  const args = [...arguments].slice(1)
-
-  return function F() {
-    if (this instanceof F) {
-      return new _this(...args, ...arguments)
-    }
-    return _this.apply(context, args.context(...arguments))
-  }
-}
-
-function myNew() {
-  let obj = {}
-  let Con = [].shift.call(arguments)
-
-  obj.__proto__ = Con.prototype
-
-  let result = Con.apply(obj, arguments)
-  return result instanceof Object ? result : obj
-}
-
-function myInstanceof(left, right) {
-  let prototype = right.prototype
-
-  left = left.__proto__
-
-  while(true) {
-    if (!left === null || !left === undefined) {
-      return
-    }
-
-    if (prototype === left) {
-      return true
-    }
-
-    left = left.__proto__
+    const promise2 = new MyPromise((resolve, reject) => {})
+    return promise2
   }
 }
