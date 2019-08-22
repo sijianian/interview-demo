@@ -1,3 +1,5 @@
+// https://zhuanlan.zhihu.com/p/21834559
+
 const PENDING = 'pending'
 const FULFILLED = 'fulfilled'
 const REJECTED = 'rejected'
@@ -144,5 +146,54 @@ class MyPromise {
     return promise2
   }
 
-  resolvePromise(promise2, x, resolve, reject) {}
+  resolvePromise(promise2, x, resolve, reject) {
+    if (promise2 === x) {
+      return reject(new TypeError('Error'))
+    }
+
+    if (x instanceof MyPromise) {
+      x.then(value => {
+        this.resolvePromise(promise2, value, resolve, reject)
+      })
+    }
+
+    let called = false
+
+    if (x !== null && (typeof x === 'object' || typeof x === 'function')) {
+      try {
+        let then = x.then
+
+        if (typeof then === 'function') {
+          then.call(
+            x,
+            y => {
+              if (called) {
+                return
+              }
+              called = true
+              this.resolvePromise(promise2, y, resolve, reject)
+            },
+            e => {
+              if (called) {
+                return
+              }
+              called = true
+              reject(e)
+            }
+          )
+        } else {
+          resolve(x)
+        }
+      } catch (r) {
+        if (called) {
+          return
+        }
+
+        called = true
+        reject(r)
+      }
+    } else {
+      resolve(x)
+    }
+  }
 }
