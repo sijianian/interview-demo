@@ -42,16 +42,6 @@ class MyPromise {
       })
     })
   }
-  static deferred() {
-    let dfd = {}
-
-    dfd.promise = new MyPromise((resolve, reject) => {
-      dfd.resolve = resolve
-      dfd.reject = reject
-    })
-
-    return dfd
-  }
 
   constructor(fn) {
     this.state = PENDING
