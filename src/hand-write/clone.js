@@ -8,17 +8,14 @@ const shallowClone = obj => {
 }
 
 const deepClone = parent => {
-  const parents = []
-  const children = []
-
   const getType = obj => {
     return Object.prototype.toString
       .call(obj)
       .replace(/^\[object\s(\w+)\]$/, '$1')
       .toLowerCase()
   }
-  const getRegExp = reg => ''
-  const _clone = parent => {
+
+  const _clone = (parent, hash = new WeakMap()) => {
     if (parent === null) {
       return null
     }
@@ -27,37 +24,30 @@ const deepClone = parent => {
       return parent
     }
 
-    let child = null
-    let proto = null
-    let type = getType(parent)
+    let child
+    let Constructor = parent.constructor
 
-    switch (type) {
+    switch (getType(parent)) {
       case 'array':
         child = []
         break
       case 'regexp':
-        child = new RegExp(parent.source, getRegExp(parent))
+        child = new Constructor(parent)
         break
       case 'date':
         child = new Date(parent.getTime())
         break
       default:
-        proto = Object.getPrototypeOf(parent)
-        child = Object.create(proto)
+        if (hash.has(parent)) {
+          return hash.get(parent)
+        }
+        child = new Constructor()
+        hash.set(parent, child)
         break
     }
 
-    const index = parents.indexOf(parent)
-
-    if (~index) {
-      return children[index]
-    }
-
-    parents.push(parent)
-    children.push(child)
-
-    for (let i in parent) {
-      child[i] = _clone(parent[i])
+    for (let key in parent) {
+      child[key] = _clone(parent[key], hash)
     }
 
     return child
