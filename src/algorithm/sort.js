@@ -104,7 +104,7 @@ function qSort(array) {
   let left = []
   let right = []
 
-  let index = parseInt(Math.random() * array.length)
+  let index = parseInt(Math.random() * (array.length - 1))
   let mid = array[index]
 
   for (let i = 1; i < array.length; i++) {
