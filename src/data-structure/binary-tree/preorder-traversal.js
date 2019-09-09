@@ -1,20 +1,24 @@
 // 递归实现
-function preorderTraversal(root, array = []) {
-  if (root) {
-    array.push(root.val)
-    preorderTraversal(root.left, array)
-    preorderTraversal(root.right, array)
+export const preorderTraversal = (root, array = []) => {
+  if (!root) {
+    return
   }
+
+  array.push(root.val)
+  preorderTraversal(root.left, array)
+  preorderTraversal(root.right, array)
+
+  return array
 }
 
 // 非递归实现
-function preorderTraversal2(root) {
-  const stack = []
+export const preorderTraversal2 = root => {
   const result = []
+  const stack = []
 
   let current = root
 
-  while (current || stack.length) {
+  while (current || stack.length > 0) {
     while (current) {
       result.push(current.val)
       stack.push(current)
@@ -24,4 +28,6 @@ function preorderTraversal2(root) {
     current = stack.pop()
     current = current.right
   }
+
+  return result
 }

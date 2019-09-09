@@ -1,14 +1,18 @@
 // 递归实现
-function postorderTraversal(root, array = []) {
-  if (root) {
-    postorderTraversal(root.left, array)
-    postorderTraversal(root.right, array)
-    array.push(root.val)
+export const postorderTraversal = (root, array) => {
+  if (!root) {
+    return
   }
+
+  postorderTraversal(root.left, array)
+  postorderTraversal(root.right, array)
+  array.push(root.val)
+
+  return array
 }
 
 // 非递归实现
-function postorderTraversal2(root) {
+export const postorderTraversal2 = root => {
   const result = []
   const stack = []
 

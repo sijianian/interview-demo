@@ -1,18 +1,20 @@
 // 递归实现
-function inorderTraversal(root, array = []) {
-  if (root) {
-    inorderTraversal(root.left, array)
-    array.push(root.val)
-    inorderTraversal(root.right, array)
+export const inorderTraversal = (root, array = []) => {
+  if (!root) {
+    return
   }
+
+  inorderTraversal(root.left, array)
+  array.push(root.val)
+  inorderTraversal(root.right, array)
 
   return array
 }
 
 // 非递归实现
-function inorderTraversal2(root) {
-  const result = []
+export const inorderTraversal2 = root => {
   const stack = []
+  const result = []
 
   let current = root
 
