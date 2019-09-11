@@ -1,13 +1,13 @@
-const shallowClone = obj => {
+export const shallowClone = obj => {
   const result = {}
 
-  for (let i in obj) {
+  for (const i in obj) {
     result[i] = obj[i]
   }
   return result
 }
 
-const deepClone = parent => {
+export const deepClone = parent => {
   const getType = obj => {
     return Object.prototype.toString
       .call(obj)
@@ -25,7 +25,7 @@ const deepClone = parent => {
     }
 
     let child
-    let Constructor = parent.constructor
+    const Constructor = parent.constructor
 
     switch (getType(parent)) {
       case 'array':
@@ -46,7 +46,7 @@ const deepClone = parent => {
         break
     }
 
-    for (let key in parent) {
+    for (const key in parent) {
       child[key] = _clone(parent[key], hash)
     }
 

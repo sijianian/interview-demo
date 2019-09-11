@@ -1,11 +1,10 @@
-export function myApply(context) {
+export function myApply(context, ...args) {
   if (typeof this !== 'function') {
     throw new Error('error')
   }
 
   context = context || window
 
-  const args = [...arguments].slice(1)
   const mySymbol = Symbol()
 
   context[mySymbol] = this

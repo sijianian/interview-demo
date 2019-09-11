@@ -13,7 +13,9 @@
     "jest": true
   },
   "globals": {
-    // "process": true
+    "process": true,
+    "Symbol": true,
+    "WeakMap": true
   },
   "rules": {
     "prettier/prettier": ["error", { "singleQuote": true }],

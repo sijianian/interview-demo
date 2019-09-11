@@ -1,18 +1,18 @@
-export function myBind(context) {
+export function myBind(context, ...args) {
   if (typeof this !== 'function') {
     throw new TypeError('error')
   }
 
   context = context || window
 
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
   const _this = this
-  const args = [...arguments].slice(1)
 
-  return function F() {
+  return function F(args2) {
     if (this instanceof F) {
-      return new _this(...args, ...arguments)
+      return new _this(...args, ...args2)
     }
 
-    return _this.apply(context, [...args, ...arguments])
+    return _this.apply(context, [...args, ...args2])
   }
 }

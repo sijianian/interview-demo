@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 let uid = 0
 
 // 消息管理员
@@ -82,7 +84,7 @@ class Vue {
     // 简化了$options的处理
     this.$options = options
     // 简化了对data的处理
-    let data = (this._data = this.$options.data)
+    const data = (this._data = this.$options.data)
     // 将所有data最外层属性代理到Vue实例上
     Object.keys(data).forEach(key => this._proxy(key))
     // 监听数据

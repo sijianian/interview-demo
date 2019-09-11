@@ -1,4 +1,4 @@
-export function myCall(context) {
+export function myCall(context, ...args) {
   if (typeof this !== 'function') {
     throw new Error('error')
   }
@@ -6,7 +6,6 @@ export function myCall(context) {
   context = context || window
 
   const mySymbol = Symbol()
-  const args = [...arguments].slice(1)
 
   context[mySymbol] = this
 

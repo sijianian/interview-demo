@@ -26,19 +26,19 @@ export default class EventEmitter {
 
   once(type, handler) {
     let fired = false
-    function magic() {
+    function magic(...args) {
       this.off(type, magic)
       if (!fired) {
         fired = true
-        handler.apply(this, arguments)
+        handler.apply(this, args)
       }
     }
     this.on(type, magic)
   }
 
-  emit(type) {
-    let payload = [].slice.call(arguments, 1)
-    let array = this._events[type] || []
+  emit(type, ...args) {
+    const payload = args
+    const array = this._events[type] || []
     array.forEach(handler => {
       handler.apply(this, payload)
     })
