@@ -1,7 +1,3 @@
-function isBalancedSolution(pRoot) {
-  return balanced(pRoot) !== -1
-}
-
 function balanced(node) {
   if (!node) {
     return 0
@@ -15,4 +11,8 @@ function balanced(node) {
   }
 
   return Math.max(left, right) + 1
+}
+
+export function isBalancedSolution(pRoot) {
+  return balanced(pRoot) !== -1
 }

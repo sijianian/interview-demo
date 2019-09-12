@@ -1,4 +1,4 @@
-function GetNext(pNode) {
+export function GetNext(pNode) {
   if (!pNode) {
     return null
   }

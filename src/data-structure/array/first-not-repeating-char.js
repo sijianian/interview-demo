@@ -6,7 +6,7 @@
 
 */
 
-const firstNotRepeatingChar = str => {
+export const firstNotRepeatingChar = str => {
   if (!str) {
     return -1
   }
@@ -31,7 +31,7 @@ const firstNotRepeatingChar = str => {
   return -1
 }
 
-const firstNotRepeatingChar2 = str => {
+export const firstNotRepeatingChar2 = str => {
   if (!str) {
     return -1
   }

@@ -1,14 +1,3 @@
-function Convert(pRootOfTree) {
-  if (!pRootOfTree) {
-    return null
-  }
-  ConvertCore(pRootOfTree)
-  while (pRootOfTree.left) {
-    pRootOfTree = pRootOfTree.left
-  }
-  return pRootOfTree
-}
-
 function ConvertCore(node, last) {
   if (node.left) {
     last = ConvertCore(node.left, last)
@@ -22,4 +11,15 @@ function ConvertCore(node, last) {
     last = ConvertCore(node.right, last)
   }
   return last
+}
+
+export function Convert(pRootOfTree) {
+  if (!pRootOfTree) {
+    return null
+  }
+  ConvertCore(pRootOfTree)
+  while (pRootOfTree.left) {
+    pRootOfTree = pRootOfTree.left
+  }
+  return pRootOfTree
 }

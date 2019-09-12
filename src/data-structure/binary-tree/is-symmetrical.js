@@ -1,7 +1,3 @@
-function isSymmetrical(root) {
-  return isSymmetricalTree(root, root)
-}
-
 function isSymmetricalTree(node1, node2) {
   if (!node1 && !node2) {
     return true
@@ -19,4 +15,8 @@ function isSymmetricalTree(node1, node2) {
     isSymmetricalTree(node1.left, node2.right) &&
     isSymmetricalTree(node1.right, node2.left)
   )
+}
+
+export function isSymmetrical(root) {
+  return isSymmetricalTree(root, root)
 }

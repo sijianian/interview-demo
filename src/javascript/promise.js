@@ -4,9 +4,9 @@ const PENDING = 'pending'
 const FULFILLED = 'fulfilled'
 const REJECTED = 'rejected'
 
-class MyPromise {
+export class MyPromise {
   static resolve(value) {
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       resolve(value)
     })
   }
@@ -17,7 +17,7 @@ class MyPromise {
   }
   static all(promiseArr) {
     return new MyPromise((resolve, reject) => {
-      let result = []
+      const result = []
 
       promiseArr.forEach((promise, index) => {
         promise.then(value => {
@@ -52,7 +52,7 @@ class MyPromise {
 
     const resolve = value => {
       if (value instanceof MyPromise) {
-        return value.then(resolve, reject)
+        return value.then(resolve)
       }
 
       setTimeout(() => {
@@ -153,7 +153,7 @@ class MyPromise {
 
     if (x !== null && (typeof x === 'object' || typeof x === 'function')) {
       try {
-        let then = x.then
+        const then = x.then
 
         if (typeof then === 'function') {
           then.call(

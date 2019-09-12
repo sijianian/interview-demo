@@ -5,7 +5,7 @@
 使得所有的奇数位于数组的前半部分，所有的偶数位于数组的后半部分
 
 */
-const reOrderArray = array => {
+export const reOrderArray = array => {
   if (!Array.isArray(array)) {
     return array
   }

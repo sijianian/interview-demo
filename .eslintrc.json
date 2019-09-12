@@ -12,13 +12,12 @@
     "jasmine": true,
     "jest": true
   },
-  "globals": {
-    "process": true,
-    "Symbol": true,
-    "WeakMap": true
-  },
+  "globals": {},
   "rules": {
     "prettier/prettier": ["error", { "singleQuote": true }],
+    "no-undef": 0,
+    "no-prototype-builtins": 0,
+    "@typescript-eslint/no-this-alias": 0,
     "@typescript-eslint/explicit-member-accessibility": 0,
     "@typescript-eslint/explicit-function-return-type": 0
   },

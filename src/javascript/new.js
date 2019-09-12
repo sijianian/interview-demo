@@ -1,15 +1,15 @@
-export function myNew() {
+export function myNew(...args) {
   // 创建一个空对象
-  let obj = {}
+  const obj = {}
 
   // 获取构造函数
-  let Con = [].shift.call(arguments)
+  const Con = [].shift.call(args)
 
   // 设置空对象的原型
   obj.__proto__ = Con.prototype
 
   // 绑定 this 并执行构造函数
-  let result = Con.apply(obj, arguments)
+  const result = Con.apply(obj, args)
 
   // 确保返回值为对象
   return result instanceof Object ? result : obj

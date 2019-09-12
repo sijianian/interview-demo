@@ -7,8 +7,8 @@ class HistoryRouter {
 
   listenPopState() {
     window.addEventListener('popstate', e => {
-      let state = e.state || {}
-      let path = state.path || ''
+      const state = e.state || {}
+      const path = state.path || ''
 
       this.dealPathHandler(path)
     })
@@ -16,7 +16,7 @@ class HistoryRouter {
 
   listenLink() {
     window.addEventListener('click', e => {
-      let dom = e.target
+      const dom = e.target
 
       if (dom.tagName.toUpperCase() === 'A' && dom.getAttribute('href')) {
         e.preventDefault()
@@ -25,7 +25,7 @@ class HistoryRouter {
   }
 
   load() {
-    let path = window.location.pathname
+    const path = window.location.pathname
     this.dealPathHandler(path)
   }
 

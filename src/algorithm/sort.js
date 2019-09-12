@@ -3,7 +3,7 @@ function checkArray(array) {
 }
 
 function swap(array, left, right) {
-  let rightValue = array[right]
+  const rightValue = array[right]
   array[right] = array[left]
   array[left] = rightValue
 }
@@ -11,7 +11,7 @@ function swap(array, left, right) {
 // 冒泡排序
 // n + (n - 1) + (n - 2) + 1
 // O(n*n)
-function bubble(array) {
+export function bubble(array) {
   if (!checkArray(array)) {
     return
   }
@@ -30,7 +30,7 @@ function bubble(array) {
 // 插入排序
 // n + (n - 1) + (n - 2) + 1
 // O(n*n)
-function insertion(array) {
+export function insertion(array) {
   if (!checkArray(array)) {
     return
   }
@@ -47,7 +47,7 @@ function insertion(array) {
 // 选择排序
 // n + (n - 1) + (n - 2) + 1
 // O(n*n)
-function selection(array) {
+export function selection(array) {
   if (!checkArray(array)) {
     return
   }
@@ -64,17 +64,17 @@ function selection(array) {
 }
 
 // 归并排序
-function mergeSort(array, left, right) {
+export function mergeSort(array, left, right) {
   if (left === right) {
     return
   }
 
-  let mid = parseInt((left + (right - left)) >> 1)
+  const mid = parseInt((left + (right - left)) >> 1)
 
   mergeSort(array, left, mid)
   mergeSort(array, mid + 1, right)
 
-  let help = []
+  const help = []
   let i = 0
   let p1 = mid + 1
   let p2 = mid + 1
@@ -100,12 +100,12 @@ function mergeSort(array, left, right) {
 
 // 快速排序
 // O(logN)
-function qSort(array) {
-  let left = []
-  let right = []
+export function qSort(array) {
+  const left = []
+  const right = []
 
-  let index = parseInt(Math.random() * (array.length - 1))
-  let mid = array[index]
+  const index = parseInt(Math.random() * (array.length - 1))
+  const mid = array[index]
 
   for (let i = 1; i < array.length; i++) {
     if (array[i] < mid) {

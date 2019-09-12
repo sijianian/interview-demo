@@ -4,7 +4,7 @@
     this.value = value
   }
 
-  Parent.prototype.getValue = function () {
+  Parent.prototype.getValue = function() {
     console.log(this.value)
   }
 
@@ -26,7 +26,7 @@
     this.value = value
   }
 
-  Parent.prototype.getValue = function () {
+  Parent.prototype.getValue = function() {
     console.log(this.value)
   }
 

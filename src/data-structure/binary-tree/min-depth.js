@@ -1,4 +1,4 @@
-function minDepth(root) {
+export function minDepth(root) {
   if (!root) {
     return 0
   }

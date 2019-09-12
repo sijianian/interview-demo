@@ -1,4 +1,4 @@
-class Stack {
+export class Stack {
   constructor() {
     this.stack = []
   }
@@ -12,7 +12,7 @@ class Stack {
   }
 
   peek() {
-    return this.stack[this.getCount() -1]
+    return this.stack[this.getCount() - 1]
   }
 
   getCount() {

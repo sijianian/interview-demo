@@ -1,6 +1,5 @@
 // 二叉树的镜像
-
-function mirror(root) {
+export function mirror(root) {
   if (root) {
     const temp = root.right
     root.right = root.left

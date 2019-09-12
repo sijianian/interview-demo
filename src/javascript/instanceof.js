@@ -1,9 +1,10 @@
-function myInstanceof(left, right) {
-  let prototype = right.prototype
+export function myInstanceof(left, right) {
+  const prototype = right.prototype
 
   left = left.__proto__
 
-  while(true) {
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
     if (!left === null || !left === undefined) {
       return false
     }

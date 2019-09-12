@@ -6,17 +6,17 @@
 
 */
 
-const printMinNumber = numbers => {
-  if (!numbers || numbers.length === 0) {
-    return '˝'
-  }
-
-  return numbers.sort(compare).join('')
-}
-
 const compare = (a, b) => {
   const front = `${a}${b}`
   const behind = `${b}${a}`
 
   return Number(front) - Number(behind)
+}
+
+export const printMinNumber = numbers => {
+  if (!numbers || numbers.length === 0) {
+    return '˝'
+  }
+
+  return numbers.sort(compare).join('')
 }

@@ -113,8 +113,8 @@ class Tree {
 
     deep++
 
-    let dLeft = this.getDeep(node.left, deep)
-    let dRight = this.getDeep(node.right, deep)
+    const dLeft = this.getDeep(node.left, deep)
+    const dRight = this.getDeep(node.right, deep)
 
     return Math.max(dLeft, dRight)
   }

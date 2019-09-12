@@ -3,7 +3,7 @@
  *
  * @class HashRouter
  */
- class HashRouter {
+export class HashRouter {
   constructor() {
     // 用于存储不同 hash 值对应的回调函数
     this.router = {}
@@ -31,7 +31,7 @@
   }
 
   load() {
-    let hash = window.location.hash.slice(1)
+    const hash = window.location.hash.slice(1)
     let handler = !hash ? this.router.index : this.router[hash]
 
     if (!hash) {

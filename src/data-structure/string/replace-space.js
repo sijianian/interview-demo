@@ -4,4 +4,4 @@
 例如，当字符串为We Are Happy。则经过替换之后的字符串为We%20Are%20Happy
 */
 
-const replaceSpace = str => str.replace(/\s/g, '%20')
+export const replaceSpace = str => str.replace(/\s/g, '%20')

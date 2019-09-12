@@ -6,7 +6,7 @@
 export const printListFromTailToHead = head => {
   const array = []
 
-  while(head) {
+  while (head) {
     array.unshift(head.val)
     head = head.next
   }
