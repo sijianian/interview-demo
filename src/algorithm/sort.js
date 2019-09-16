@@ -104,10 +104,10 @@ export function qSort(array) {
   const left = []
   const right = []
 
-  const index = parseInt(Math.random() * (array.length - 1))
+  const index = Math.floor(array.length / 2)
   const mid = array[index]
 
-  for (let i = 1; i < array.length; i++) {
+  for (let i = 0; i < array.length; i++) {
     if (array[i] < mid) {
       left.push(array[i])
     } else {
