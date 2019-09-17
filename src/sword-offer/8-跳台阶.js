@@ -1,4 +1,4 @@
-function jumpFloor(number) {
+export function jumpFloor(number) {
   let f = 1
   let g = 2
 

@@ -1,4 +1,4 @@
-function Fibonacci(n) {
+export function Fibonacci(n) {
   let f = 0
   let g = 1
 
@@ -10,11 +10,11 @@ function Fibonacci(n) {
   return f
 }
 
-function fibonacci2(n) {
+export function fibonacci2(n) {
   return n < 2 ? n : fibonacci2(n - 2) + fibonacci2(n - 1)
 }
 
-function fibonacci3(n) {
+export function fibonacci3(n) {
   let f1 = 0
   let f2 = 1
   let r

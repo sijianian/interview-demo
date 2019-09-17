@@ -1,4 +1,4 @@
-function minNumberInRotateArray1(rotateArray) {
+export function minNumberInRotateArray1(rotateArray) {
   if (rotateArray.length === 0) {
     return 0
   }
@@ -12,7 +12,7 @@ function minNumberInRotateArray1(rotateArray) {
   }
 }
 
-function minNumberInRotateArray2(rotateArray) {
+export function minNumberInRotateArray2(rotateArray) {
   let left = 0
   let right = rotateArray.length - 1
 

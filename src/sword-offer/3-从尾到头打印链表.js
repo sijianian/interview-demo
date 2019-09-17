@@ -1,12 +1,12 @@
-function ListNode(val) {
+export function ListNode(val) {
   this.val = val
   this.next = null
 }
 
-function printListFromTailToHead(head) {
-  let res = []
+export function printListFromTailToHead(head) {
+  const res = []
 
-  while(head) {
+  while (head) {
     res.unshift(head.val)
     head = head.next
   }

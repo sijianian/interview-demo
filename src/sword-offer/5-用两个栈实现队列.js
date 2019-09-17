@@ -1,4 +1,4 @@
-class Stack {
+export class Stack {
   list = []
 
   push(node) {
@@ -14,14 +14,14 @@ class Stack {
   }
 }
 
-let stack1 = new Stack()
-let stack2 = new Stack()
+const stack1 = new Stack()
+const stack2 = new Stack()
 
-function push(node) {
+export function push(node) {
   stack1.push(node)
 }
 
-function pop() {
+export function pop() {
   if (stack1.isEmpty() && stack2.isEmpty()) {
     throw new Error('Queue is empty')
   }

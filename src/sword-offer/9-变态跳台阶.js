@@ -1,4 +1,4 @@
-function jumpFloorII(number) {
+export function jumpFloorII(number) {
   let i = 1
 
   while (--number) {

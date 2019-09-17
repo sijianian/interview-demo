@@ -1,4 +1,4 @@
-function findInMatrixArray(target, array) {
+export function findInMatrixArray(target, array) {
   let i = array.length // 行数
   let j = array[0].length // 列数
 
