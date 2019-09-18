@@ -4,7 +4,7 @@ function binarySearch(data, arr, start, end) {
   }
 
   // const mid = Math.floor((start + end) / 2)
-  const mid = Math.floor(end + ((start - end) >> 1))
+  const mid = Math.floor(start + ((end - start) >> 1))
 
   if (data === arr[mid]) {
     return mid
