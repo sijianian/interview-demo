@@ -9,13 +9,8 @@ export function myApply(context, ...args) {
 
   context[mySymbol] = this
 
-  let result
-
-  if (args[0]) {
-    result = context[mySymbol](...args[0])
-  } else {
-    result = context[mySymbol]()
-  }
+  const params = args[0]
+  const result = params ? context[mySymbol](...params) : context[mySymbol]()
 
   delete context[mySymbol]
 
