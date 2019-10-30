@@ -24,14 +24,14 @@ export const deepClone = (parent, hash = new WeakMap()) => {
 
   let child
   const type = getType(parent)
-  const ConFn = parent.constructor
+  const constructorFunc = parent.constructor
 
   switch (type) {
     case 'array':
       child = []
       break
     case 'regexp':
-      child = new ConFn(parent)
+      child = new constructorFunc(parent)
       break
     case 'date':
       child = new Date(parent.getTime())
@@ -40,7 +40,7 @@ export const deepClone = (parent, hash = new WeakMap()) => {
       if (hash.has(parent)) {
         return hash.get(parent)
       }
-      child = new ConFn()
+      child = new constructorFunc()
       hash.set(parent, child)
       break
   }
