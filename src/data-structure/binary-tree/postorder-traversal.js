@@ -1,7 +1,7 @@
 // 递归实现
 export const postorderTraversal = (root, array) => {
   if (!root) {
-    return
+    return array
   }
 
   postorderTraversal(root.left, array)

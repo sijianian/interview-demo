@@ -1,7 +1,7 @@
 // 递归实现
 export const preorderTraversal = (root, array = []) => {
   if (!root) {
-    return
+    return array
   }
 
   array.push(root.val)
