@@ -105,7 +105,7 @@ export function qSort(array) {
   const right = []
 
   const index = Math.floor(array.length / 2)
-  const mid = array[index]
+  const mid = array.splice(index, 1)[0]
 
   for (let i = 0; i < array.length; i++) {
     if (array[i] < mid) {
