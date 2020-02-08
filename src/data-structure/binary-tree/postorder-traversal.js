@@ -36,4 +36,6 @@ export const postorderTraversal2 = root => {
       current = current.right
     }
   }
+
+  return result
 }
