@@ -59,3 +59,11 @@ export class MyPromise {
     }
   }
 }
+
+new MyPromise(resolve => {
+  setTimeout(() => {
+    resolve('111')
+  }, 3000)
+}).then(value => {
+  console.log('value', value)
+})
