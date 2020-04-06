@@ -1,5 +1,5 @@
-;(function(window, document) {
-  const jsonp = function(url, data, callback) {
+;(function (window, document) {
+  const jsonp = function (url, data, callback) {
     // 1.将传入的data数据转化为url字符串形式
     // {id:1,name:'jack'} => id=1&name=jack
     let dataString = url.indexOf('?') == -1 ? '?' : '&'
@@ -10,9 +10,7 @@
 
     // 2. 处理url中的回调函数
     // cbFuncName回调函数的名字 ：my_json_cb_名字的前缀 + 随机数（把小数点去掉）
-    const cbFuncName = `my_json_cb_${Math.random()
-      .toString()
-      .replace('.', '')}`
+    const cbFuncName = `my_json_cb_${Math.random().toString().replace('.', '')}`
 
     dataString += `callback=${cbFuncName}`
 
@@ -22,7 +20,7 @@
     scriptEle.src = `${url}${dataString}`
 
     // 4.挂载回调函数
-    window[cbFuncName] = function(data) {
+    window[cbFuncName] = function (data) {
       callback(data)
       // 处理完回调函数的数据之后，删除jsonp的script标签
       document.body.removeChild(scriptEle)

@@ -1,6 +1,6 @@
 class TreeNode {}
 
-function reConstructBinaryTree(pre, mid) {
+export function reConstructBinaryTree(pre, mid) {
   if (pre.length === 0) {
     return null
   }
@@ -26,7 +26,7 @@ function reConstructBinaryTree(pre, mid) {
   return node
 }
 
-function getHRD(pre, mid) {
+export function getHRD(pre, mid) {
   if (!pre) {
     return ''
   }

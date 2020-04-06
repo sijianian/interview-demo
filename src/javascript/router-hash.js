@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 /**
  * https://mubu.com/doc/1iFLzJZrdK
  *

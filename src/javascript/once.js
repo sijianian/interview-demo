@@ -1,7 +1,7 @@
 export function once(fn) {
   let called = false
 
-  return function() {
+  return function () {
     if (!called) {
       called = true
       // eslint-disable-next-line prefer-rest-params

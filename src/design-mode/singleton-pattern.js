@@ -10,10 +10,10 @@ export class MySingle {
 }
 
 // 闭包实现
-MySingle.getInstance = (function() {
+MySingle.getInstance = (function () {
   let instance = null
 
-  return function() {
+  return function () {
     if (!instance) {
       instance = new MySingle()
     }

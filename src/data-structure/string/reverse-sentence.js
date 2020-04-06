@@ -1,11 +1,7 @@
 /*
 题目: 翻转单词顺序
 */
-export const reverseSentence = (str = '') =>
-  str
-    .split(' ')
-    .reverse()
-    .join()
+export const reverseSentence = (str = '') => str.split(' ').reverse().join()
 
 /*
 题目：

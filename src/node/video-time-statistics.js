@@ -35,7 +35,7 @@ function getLocaleTime(seconds) {
     })
 }
 
-;(async function() {
+;(async function () {
   const dir = path.resolve(__dirname + '/video')
   const files = fs.readdirSync(dir).map(file => path.resolve(dir, file))
   const videos = await Promise.all(
