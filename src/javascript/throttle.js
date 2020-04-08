@@ -1,7 +1,7 @@
 export const throttle = (fn, delay = 300) => {
   let flag = true
 
-  return (...args) => {
+  return function (...args) {
     if (!flag) {
       return
     }

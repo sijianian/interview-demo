@@ -1,7 +1,6 @@
 // 自带函数节流功能
 // 基本保证在 16.6 毫秒内只执行一次
-
-function setInterval(callback, interval) {
+export function setInterval(callback, interval) {
   let timer
 
   const now = Date.now

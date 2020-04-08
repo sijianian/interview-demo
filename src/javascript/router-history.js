@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-class HistoryRouter {
+export class HistoryRouter {
   constructor() {
     this.router = {}
     this.listenPopState()
