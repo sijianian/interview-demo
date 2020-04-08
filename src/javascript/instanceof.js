@@ -5,7 +5,7 @@ export function myInstanceof(left, right) {
 
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    if (!left === null || !left === undefined) {
+    if (left === null || left === undefined) {
       return false
     }
 
