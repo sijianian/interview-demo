@@ -15,7 +15,7 @@ export class MyPromise {
         if (this.state === PENDING) {
           this.value = value
           this.state = FULFILLED
-          this.onFulfilledList.forEach(fn => fn(this.value))
+          this.onFulfilledList.map(cb => cb(this.value))
         }
       })
     }
@@ -24,7 +24,7 @@ export class MyPromise {
         if (this.state === PENDING) {
           this.value = value
           this.state = REJECTED
-          this.onRejectedList.forEach(fn => fn(this.value))
+          this.onRejectedList.map(cb => cb(this.value))
         }
       })
     }
