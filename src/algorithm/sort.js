@@ -36,8 +36,10 @@ export function insertion(array) {
   }
 
   for (let i = 1; i < array.length; i++) {
-    for (let j = i - 1; j >= 0 && array[j] > array[j + 1]; j--) {
-      swap(array, j, j + 1)
+    for (let j = i - 1; j >= 0; j--) {
+      if (array[j] > array[j + 1]) {
+        swap(array, j, j + 1)
+      }
     }
   }
 
@@ -54,9 +56,11 @@ export function selection(array) {
 
   for (let i = 0; i < array.length - 1; i++) {
     let minIndex = i
+
     for (let j = i + 1; j < array.length; j++) {
       minIndex = array[j] < array[minIndex] ? j : minIndex
     }
+
     swap(array, i, minIndex)
   }
 
@@ -100,7 +104,7 @@ export function mergeSort(array, left, right) {
 
 // 快速排序
 // O(logN)
-export function qSort(array) {
+export function quickSort(array) {
   const left = []
   const right = []
 
@@ -115,5 +119,5 @@ export function qSort(array) {
     }
   }
 
-  return qSort(left).concat(mid, qSort(right))
+  return quickSort(left).concat(mid, quickSort(right))
 }
